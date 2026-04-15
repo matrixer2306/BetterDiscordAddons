@@ -203,6 +203,7 @@
 			"getMessageAuthor": [".channel_id);return"]
 		}},
 		"MessageComponentUtils": {"strings": [".UNBLOCK_TO_JUMP_BODY", ".altKey"]},
+		"MessageForwardParser": {"strings": ["timestampLabel", "parentMessage", "getForward"]},
 		"MessageManageUtils": {"strings": ["showMentionToggle", "message-actions"], "exported": false, "value": "exports", "map": {
 			"copyLink": ["MESSAGE_LINK_COPIED"],
 			"replyToMessage": ["showMentionToggle"]

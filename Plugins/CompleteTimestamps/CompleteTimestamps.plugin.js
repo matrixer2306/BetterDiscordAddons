@@ -2,7 +2,7 @@
  * @name CompleteTimestamps
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 1.7.4
+ * @version 1.7.5
  * @description Replaces Timestamps with your own custom Timestamps
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -86,7 +86,6 @@ module.exports = (_ => {
 				
 				this.modulePatches = {
 					after: [
-						"AuditLogEntry",
 						"Embed",
 						"MessageTimestamp"
 					]
@@ -110,6 +109,13 @@ module.exports = (_ => {
 					if (this.settings.tooltips.markup) {
 						e.returnValue.props.text = this.formatTimestamp(this.settings.dates.tooltipDate, date);
 						if (e.returnValue.props.node) e.returnValue.props.node.full = e.returnValue.props.text;
+					}
+				}});
+				
+				BDFDB.LibraryModules.MessageForwardParser && BDFDB.LibraryModules.MessageForwardParser.prototype && BDFDB.PatchUtils.patch(this, BDFDB.LibraryModules.MessageForwardParser.prototype, "getForwardInfo", {after: e => {
+					if (this.settings.places.chat) {
+						let timestamp = this.formatTimestamp(this.settings.dates.timestampDate, e.instance.messageSnapshot.message.timestamp);
+						if (e.returnValue.footerInfo.timestampLabel) e.returnValue.footerInfo.timestampLabel = timestamp;
 					}
 				}});
 				
@@ -241,23 +247,6 @@ module.exports = (_ => {
 						process(children);
 						return children;
 					}, "Error in Children Render of Embed!", this);
-				}
-				else process(e.returnvalue);
-			}
-
-			processAuditLogEntry (e) {
-				if (!this.settings.places.auditLogs || !e.instance.props.log) return;
-				let process = returnvalue => {
-					let [children, index] = BDFDB.ReactUtils.findParent(returnvalue, {props: [["className", BDFDB.disCN.auditlogtimestamp]]});
-					if (index > -1) children[index].props.children = this.formatTimestamp(this.settings.dates.timestampDate, e.instance.props.log.timestampStart._i);
-				};
-				if (typeof e.returnvalue.props.children == "function") {
-					let childrenRender = e.returnvalue.props.children;
-					e.returnvalue.props.children = BDFDB.TimeUtils.suppress((...args) => {
-						let children = childrenRender(...args);
-						process(children);
-						return children;
-					}, "", this);
 				}
 				else process(e.returnvalue);
 			}
