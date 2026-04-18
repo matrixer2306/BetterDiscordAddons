@@ -2,7 +2,7 @@
  * @name Translator
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 2.8.0
+ * @version 2.8.1
  * @description Allows you to translate incoming and your outgoing Messages within Discord
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -462,6 +462,18 @@ module.exports = (_ => {
 				BDFDB.PatchUtils.patch(this, BDFDB.LibraryModules.MessageUtils, "editMessage", {before: e => {
 					delete translatedMessages[e.methodArguments[1]];
 					delete oldMessages[e.methodArguments[1]];
+				}});
+				BDFDB.PatchUtils.patch(this, BDFDB.LibraryModules.MessageUtils, "sendMessage", {instead: e2 => {
+					const args = e2.methodArguments, msg = args[1], text = msg && msg.content;
+					const match = text && ((this.settings.prefixes || {}).translationPrefixData || []).find(p => text.trim().startsWith(p.prefix));
+					if (!text || (!match && !this.isTranslationEnabled(args[0]))) return e2.callOriginalMethodAfterwards();
+					e2.stopOriginalMethodCall();
+					const src = match ? text.trim().substring(match.prefix.length).trim() : text;
+					this.translateText(src, messageTypes.SENT, t => {
+						t = !t ? src : (this.settings.general.sendOriginalMessage ? (t + (!this.settings.general.useSpoilerInOriginal ? ("\n\n> *" + src.split("\n").join("*\n> *") + "*").replace(/> \*\*\n/g, "> \n") : `\n\n||${src}||`)) : t);
+						e2.originalMethod(args[0], Object.assign({}, msg, {content: t}), ...args.slice(2));
+					}, match && match.language);
+					return Promise.resolve();
 				}});
 				BDFDB.PatchUtils.patch(this, BDFDB.LibraryModules.MessageToolbarUtils, "useMessageMenu", {after: e => {
 					if (e.instance.props.message && e.instance.props.channel) {
@@ -984,7 +996,6 @@ module.exports = (_ => {
 			}
 
 			processChannelTextAreaEditor (e) {
-				if (this.isTranslationEnabled(e.instance.props.channel.id) && isTranslating) e.instance.props.disabled = true;
 			}
 			
 			processChannelTextAreaButtons (e) {
