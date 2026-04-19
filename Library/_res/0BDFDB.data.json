@@ -428,7 +428,7 @@
 		"ChannelSidebar": {"strings": ["ACCOUNT_PANEL", "RTC_CONNECTION_PANEL", "ACCOUNT_A11Y_LABEL"]},
 		"ChannelsList": {"strings": ["this.jumpToVoiceChannels", "guildChannels:", "renderBottomUnread"], "noSearch": true},
 		"ChannelTextAreaButtons": {"strings": [".button", "\"emoji\"", "activeCommandOption"]},
-		"ChannelTextAreaContainer": {"strings": ["refToChannelTextAreaFormComponent", "threadsAlsoSendToChannel"], "noSearch": true},
+		"ChannelTextAreaContainer": {"strings": ["uploadPromptCharacterCount", "onSelectSticker", "handleAutocompleteVisibilityChange"], "noSearch": true},
 		"ChannelTextAreaCounter": {"strings": ["iconOnly", ".CHARACTER_COUNT"]},
 		"ChannelTextAreaEditor": {"strings": ["onHideAutocomplete", "onMaybeShowAutocomplete", "uploadPromptCharacterCount", "_focusBlurQueue"]},
 		"ChannelTextAreaForm": {"strings": ["renderApplicationCommandIcon", "handleTextareaChange", "handleSendMessage"]},
