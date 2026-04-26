@@ -2,7 +2,7 @@
  * @name BetterSearchPage
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 1.2.9
+ * @version 1.3.0
  * @description Makes the Controls in the Search Results Page sticky
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -61,6 +61,7 @@ module.exports = (_ => {
 			return template.content.firstElementChild;
 		}
 	} : (([Plugin, BDFDB]) => {
+		var currentSearch;
 		return class BetterSearchPage extends Plugin {
 			onLoad () {
 				this.modulePatches = {
@@ -93,13 +94,21 @@ module.exports = (_ => {
 
 			processSearchResults (e) {
 				if (!e.instance.props.search) return;
+				if (!currentSearch || e.instance.props.selectedChannelId != currentSearch.id) currentSearch = {id: e.instance.props.selectedChannelId, currentPage: 1};
 				let [children, index] = BDFDB.ReactUtils.findParent(e.returnvalue, {name: "SearchResultsHeader"});
 				if (index == -1) return;
 				let onPageChange = BDFDB.ReactUtils.findValue(e.returnvalue, "onPageChange");
-				if (onPageChange) children.splice(index + 1, 0, BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SearchResultsPagination, {
-					onPageChange: newPage => !e.instance.props.search.searching && onPageChange(newPage),
+				let renderPageWrapper = BDFDB.ReactUtils.findValue(e.returnvalue, "renderPageWrapper");
+				if (onPageChange && renderPageWrapper) children.splice(index + 1, 0, BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SearchResultsPagination, {
+					currentPage: currentSearch.currentPage,
+					onPageChange: newPage => {
+						currentSearch.currentPage = newPage;
+						!e.instance.props.search.searching && onPageChange(newPage);
+					},
+					renderPageWrapper: renderPageWrapper,
+					maxVisiblePages: 5,
 					offset: e.instance.props.search.offset,
-					totalCount: e.instance.props.search.totalResults > 9976 ? 9976 : e.instance.props.search.totalResults,
+					totalCount: e.instance.props.search.totalResults > 9975 ? 9975 : e.instance.props.search.totalResults,
 					pageSize: BDFDB.DiscordConstants.SEARCH_PAGE_SIZE
 				}));
 			}
