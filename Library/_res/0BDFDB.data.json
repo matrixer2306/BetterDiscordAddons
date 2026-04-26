@@ -238,7 +238,7 @@
 			"changePage": ["SEARCH_RESULT_PAGE_CHANGED"]
 		}},
 		"SimpleMarkdownParser": {"props": ["parseBlock", "parseInline", "defaultOutput"]},
-		"SlateRichUtils": {"strings": ["{type:\"line\",children", "textValue:", "richValue:", "map"], "exported": false, "value": "exports", "map": {
+		"SlateRichUtils": {"strings": ["{type:\"line\",children", "textValue:", "richValue:", "map", "textValue:\"\""], "exported": false, "value": "exports", "map": {
 			"toRichValue": ["{type:\"line\",children", "map"]
 		}},
 		"SlateTextUtils": {"strings": ["preventEmojiSurrogates", "ignoreTrailingEmptyNodes", "allowBlock"], "exported": false, "value": "exports", "map": {
