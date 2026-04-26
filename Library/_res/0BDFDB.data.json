@@ -1423,7 +1423,7 @@
 		"FavButton": {"props": ["gifFavoriteButton", "selected", "icon"]},
 		"File": {"props": ["cancelButton", "fileNameLink"]},
 		"FileDownloadButton": {"props": ["downloadButton", "attachmentName"]},
-		"Flex": {"props": ["flex", "flexGutterLarge"]},
+		"Flex": {"props": ["flex", "flexChild"]},
 		"FlowerStar": {"props": ["flowerStarContainer", "flowerStar"]},
 		"FormText": {"props": ["description", "modeDefault"]},
 		"ForumPage": {"props": ["newPostsButton", "list", "searchIcon"]},
