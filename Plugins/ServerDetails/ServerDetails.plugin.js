@@ -2,7 +2,7 @@
  * @name ServerDetails
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 1.3.4
+ * @version 1.3.5
  * @description Shows Server Details in the Server List Tooltip
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -357,10 +357,10 @@ module.exports = (_ => {
 			}
 			
 			processGuildItem (e) {
-				if (!e.instance.props.guild || typeof e.instance.props?.children?.props?.className != "string" || e.instance.props?.children?.props?.className.indexOf(BDFDB.disCN.guildcontainer) == -1) return;
+				if (!e.instance.props.guild) return;
 				if (!BDFDB.GuildUtils.is(e.instance.props.guild)) return;
 				let tooltipContainer;
-				e.returnvalue = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TooltipContainer, Object.assign({}, e.returnvalue.props, {
+				e.returnvalue.props.children[1].props.children = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TooltipContainer, Object.assign({}, e.returnvalue.props, {
 					ref: instance => {if (instance) tooltipContainer = instance;},
 					tooltipConfig:  Object.assign({
 						backgroundColor: this.settings.colors.tooltipColor
@@ -375,7 +375,7 @@ module.exports = (_ => {
 						tooltipContainer: tooltipContainer,
 						guild: e.instance.props.guild
 					}),
-					children: typeof e.returnvalue.props.children == "function" ? e.instance.props.children : e.returnvalue.props.children
+					children: e.returnvalue.props.children[1].props.children
 				}));
 			}
 
