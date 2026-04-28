@@ -2,7 +2,7 @@
  * @name StaffTag
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 1.7.2
+ * @version 1.7.3
  * @description Adds a Crown/Tag to Server Owners (or Admins/Management)
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -324,7 +324,7 @@ module.exports = (_ => {
 			}
 			
 			processUserHeaderUsername (e) {
-				let themeType = BDFDB.ObjectUtils.get(e.instance, "props.tags.props.themeType");
+				let themeType = BDFDB.ObjectUtils.get(e.instance, "props.trailing.props.themeType");
 				if (!e.instance.props.user || (themeType == "POPOUT" || themeType == "SIDEBAR") && !this.settings.tagPlaces.userPopout || (themeType == "MODAL" || themeType == "MODAL_V2") && !this.settings.tagPlaces.userProfile) return;
 				let userType = this.getUserType(e.instance.props.user, e.instance.props.channel && e.instance.props.channel.id);
 				if (!userType) return;
