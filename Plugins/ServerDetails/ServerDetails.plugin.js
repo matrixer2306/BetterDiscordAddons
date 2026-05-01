@@ -2,7 +2,7 @@
  * @name ServerDetails
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 1.3.5
+ * @version 1.3.6
  * @description Shows Server Details in the Server List Tooltip
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -360,11 +360,11 @@ module.exports = (_ => {
 				if (!e.instance.props.guild) return;
 				if (!BDFDB.GuildUtils.is(e.instance.props.guild)) return;
 				let tooltipContainer;
-				e.returnvalue.props.children[1].props.children = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TooltipContainer, Object.assign({}, e.returnvalue.props, {
+				e.returnvalue.props.children[1] = BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TooltipContainer, Object.assign({}, e.returnvalue.props, {
 					ref: instance => {if (instance) tooltipContainer = instance;},
 					tooltipConfig:  Object.assign({
 						backgroundColor: this.settings.colors.tooltipColor
-					}, e.returnvalue.props.tooltipConfig, {
+					}, e.returnvalue.props.children[1].props.tooltipConfig, {
 						type: "right",
 						guild: e.instance.props.guild,
 						list: true,
