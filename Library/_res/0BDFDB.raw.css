@@ -923,12 +923,6 @@ input[REPLACE_CLASS_input][REPLACE_CLASS_inputerror] {
 	color: var(--icon-strong);
 }
 
-[REPLACE_CLASS_listrowwrapper] [REPLACE_CLASS_listavatar] {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
 [REPLACE_CLASS_sidebarlist] {
 	display: flex;
 	flex-direction: row;
@@ -972,9 +966,6 @@ input[REPLACE_CLASS_input][REPLACE_CLASS_inputerror] {
 }
 [REPLACE_CLASS_modaltabcontent] {
 	margin-top: 10px;
-}
-[REPLACE_CLASS_listscroller] [REPLACE_CLASS_modaltabcontent] {
-	margin-top: 0;
 }
 [REPLACE_CLASS_modalheaderhassibling] {
 	padding-bottom: 10px;
@@ -1025,11 +1016,11 @@ input[REPLACE_CLASS_input][REPLACE_CLASS_inputerror] {
 	background: rgba(0, 0, 0, 0.2);
 	box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
 }
-[REPLACE_CLASS_modalchangelogmodal] [REPLACE_CLASS_changelogsociallink] {
+[REPLACE_CLASS_modalchangelogmodal] [REPLACE_CLASS__bdsocials] {
 	margin-right: 12px;
 }
-[REPLACE_CLASS_changelogfooter] {
-	align-items: center;
+[REPLACE_CLASS_modalchangelogmodal] [REPLACE_CLASS__bdmodalfooter] {
+	margin-right: 12px;
 }
 
 [REPLACE_CLASS_emojiinputcontainer] {

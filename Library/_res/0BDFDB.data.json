@@ -1078,9 +1078,17 @@
 			"tooltipRowExtra": "extraRow_dc56aa"
 		},
 		"BD": {
+			"bdChangelogAdded": "bd-changelog-added",
+			"bdChangelogFixed": "bd-changelog-fixed",
+			"bdChangelogImproved": "bd-changelog-improved",
+			"bdChangelogModal": "bd-changelog-modal",
+			"bdChangelogProgress": "bd-changelog-progress",
+			"bdChangelogTitle": "bd-changelog-title",
 			"bdModal": "bd-modal",
 			"bdModalContent": "bd-modal-content",
-			"bdMinimalMode": "bd-minimal"
+			"bdModalFooter": "bd-modal-footer",
+			"bdMinimalMode": "bd-minimal",
+			"bdSocials": "bd-social"
 		},
 		"BetterFriendList": {
 			"mutualGuilds": "mutualGuilds_d61638",
@@ -1407,7 +1415,6 @@
 		"CallScreenshare": {"props": ["videoControls", "topControls", "gradientTop"]},
 		"Card": {"props": ["card", "cardBrand"]},
 		"Category": {"props": ["wrapper", "children", "addButtonIcon"]},
-		"ChangeLog": {"props": ["added", "fixed", "improved", "progress"]},
 		"Channel": {"props": ["wrapper", "numberBadge", "modeSelected"]},
 		"ChannelContainer": {"props": ["actionIcon", "containerDefault"]},
 		"ChannelLimit": {"props": ["users", "total", "wrapper"]},
@@ -1641,8 +1648,16 @@
 		"VoiceDetailsPing": {"props": ["rtcConnectionQualityBad", "rtcConnectionQualityFine"]}
 	},
 	"DiscordClasses": {
+		"_bdchangelog": ["BD", "bdChangelogModal"],
+		"_bdchangelogadded": ["BD", "bdChangelogAdded"],
+		"_bdchangelogfixed": ["BD", "bdChangelogFixed"],
+		"_bdchangelogimproved": ["BD", "bdChangelogImproved"],
+		"_bdchangelogprogress": ["BD", "bdChangelogProgress"],
+		"_bdchangelogtitle": ["ChangeLog", "bdChangelogTitle"],
 		"_bdmodal": ["BD", "bdModal"],
 		"_bdmodalcontent": ["BD", "bdModalContent"],
+		"_bdmodalfooter": ["BD", "bdModalFooter"],
+		"_bdsocials": ["BD", "bdSocials"],
 		"_betterfriendlistmutualguilds": ["BetterFriendList", "mutualGuilds"],
 		"_betterfriendlistnamecell": ["BetterFriendList", "nameCell"],
 		"_betterfriendlisttitle": ["BetterFriendList", "title"],
@@ -1974,14 +1989,6 @@
 		"categorymuted": ["Category", "muted"],
 		"categoryname": ["Category", "name"],
 		"categorywrapper": ["Category", "wrapper"],
-		"changelogadded": ["ChangeLog", "added"],
-		"changelogcontainer": ["ChangeLog", "container"],
-		"changelogfixed": ["ChangeLog", "fixed"],
-		"changelogfooter": ["ChangeLog", "footer"],
-		"changelogimproved": ["ChangeLog", "improved"],
-		"changelogprogress": ["ChangeLog", "progress"],
-		"changelogsociallink": ["ChangeLog", "socialLink"],
-		"changelogtitle": ["ChangeLog", "title"],
 		"channelactionicon": ["ChannelContainer", "actionIcon"],
 		"channelchildicon": ["ChannelContainer", "iconItem"],
 		"channelchildiconbase": ["ChannelContainer", "iconBase"],

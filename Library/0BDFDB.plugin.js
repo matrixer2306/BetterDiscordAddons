@@ -2,7 +2,7 @@
  * @name BDFDB
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 4.4.9
+ * @version 4.5.0
  * @description Required Library for DevilBro's Plugins
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -884,9 +884,9 @@ module.exports = (_ => {
 				};
 				for (let type in plugin.changeLog) {
 					type = type.toLowerCase();
-					if (InternalData.DiscordClasses["changelog" + type]) changeLogEntries.push([
+					if (InternalData.DiscordClasses["_bdchangelog" + type]) changeLogEntries.push([
 						BDFDB.ReactUtils.createElement("h1", {
-							className: BDFDB.disCNS["changelog" + type] + BDFDB.disCN.margintop20,
+							className: BDFDB.disCNS._bdchangelogtitle + BDFDB.disCNS["_bdchangelog" + type] + BDFDB.disCN.margintop20,
 							style: {"margin-top": !changeLogEntries.length ? 0 : null},
 							children: BDFDB.LanguageUtils && BDFDB.LanguageUtils.LibraryStrings && BDFDB.LanguageUtils.LibraryStrings["changelog_" + type] || headers[type]
 						}),
@@ -903,12 +903,12 @@ module.exports = (_ => {
 				if (changeLogEntries.length) BDFDB.ModalUtils.open(plugin, {
 					header: `${plugin.name} ${BDFDB.LanguageUtils.LanguageStrings.CHANGE_LOG}`,
 					subHeader: `Version ${plugin.version}`,
-					className: BDFDB.disCN.modalchangelogmodal,
-					contentClassName: BDFDB.disCNS.changelogcontainer + BDFDB.disCN.modalminicontent,
+					className: BDFDB.disCNS._bdchangelog + BDFDB.disCN.modalchangelogmodal,
+					contentClassName: BDFDB.disCNS._bdmodalcontent + BDFDB.disCN.modalminicontent,
 					footerDirection: Internal.LibraryComponents.Flex.Direction.HORIZONTAL,
 					children: changeLogEntries.flat(10).filter(n => n),
 					footerChildren: (plugin == BDFDB || plugin == this || PluginStores.loaded[plugin.name] && PluginStores.loaded[plugin.name] == plugin && plugin.author == "DevilBro") && BDFDB.ReactUtils.createElement("div", {
-						className: BDFDB.disCN.changelogfooter,
+						className: BDFDB.disCN._bdmodalfooter,
 						children: [{
 							href: "https://www.paypal.me/MircoWittrien",
 							name: "PayPal",
@@ -936,7 +936,7 @@ module.exports = (_ => {
 								});
 							}
 						}].map(data => BDFDB.ReactUtils.createElement(data.href ? Internal.LibraryComponents.Anchor : Internal.LibraryComponents.Clickable, {
-							className: BDFDB.disCN.changelogsociallink,
+							className: BDFDB.disCN._bdsocial,
 							href: data.href || "",
 							onClick: !data.onClick ? (_ => {}) : data.onClick,
 							children: BDFDB.ReactUtils.createElement(Internal.LibraryComponents.TooltipContainer, {
