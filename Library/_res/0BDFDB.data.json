@@ -1485,7 +1485,7 @@
 		"GuildsDragPlaceholder": {"props": ["dragInner", "placeholderMask"], "length": 6, "smaller": true},
 		"GuildSeparator": {"props": ["guildSeparator"], "length": 6, "smaller": true},
 		"GuildsError": {"props": ["guildsError"]},
-		"GuildServer": {"props": ["blobContainer", "pill"]},
+		"GuildServer": {"props": ["blobContainer", "selected"]},
 		"GuildsFooter": {"props": ["gradient", "footer"]},
 		"GuildsListItem": {"props": ["listItemWrapper", "listItemTooltipContent"], "length": 4, "smaller": true},
 		"GuildsWrapper": {"props": ["scroller", "unreadMentionsBar", "wrapper"]},
