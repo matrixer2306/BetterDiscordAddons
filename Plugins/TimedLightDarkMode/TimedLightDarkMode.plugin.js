@@ -2,7 +2,7 @@
  * @name TimedLightDarkMode
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 1.2.1
+ * @version 1.2.2
  * @description Adds a Time Slider to the Appearance Settings
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -61,10 +61,53 @@ module.exports = (_ => {
 			return template.content.firstElementChild;
 		}
 	} : (([Plugin, BDFDB]) => {
+		var _this;
 		var checkInterval, changeTimeout, disableChanging;
+		
+		const TimerSliderComponent = class TimerSlider extends BdApi.React.Component {
+			render() {
+				var slider;
+				return BDFDB.ReactUtils.createElement("span", {
+					children: [
+						BDFDB.ReactUtils.createElement("div", {
+							className: BDFDB.disCNS._timedlightdarkmodetimersettings + BDFDB.disCN.margintop20,
+							children: [
+								BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSaveItem, {
+									type: "Switch",
+									plugin: _this,
+									keys: ["general", "running"],
+									value: _this.settings.general.running,
+									label: `${BDFDB.LanguageUtils.LanguageStrings.THEME} Timer`,
+									tag: BDFDB.LibraryComponents.FormTitle.Tags.H5,
+									childProps: {
+										checkedColor: BDFDB.DiscordConstants.Colors.GREEN_360
+									},
+									onChange: (value, instance) => {
+										_this.startInterval();
+										if (slider) BDFDB.DOMUtils.toggleClass(slider, BDFDB.disCN.sliderdisabled, !value);
+									}
+								}),
+								BDFDB.ReactUtils.elementToReact(BDFDB.DOMUtils.create(`<div class="${BDFDB.disCNS.slider + BDFDB.disCNS.sliderhasmarks + BDFDB.disCN.margintop20}${!_this.settings.general.running ? (" " + BDFDB.disCN.sliderdisabled): ""}"><div class="${BDFDB.disCN.slidertrack}">${[["0%", "00:00"], ["12.5%", "03:00"], ["25%", "06:00"], ["37.5%", "09:00"], ["50%", "12:00"], ["62.5%", "15:00"], ["75%", "18:00"], ["87.5%", "21:00"], ["100%", "24:00"]].map(n => `<div class="${BDFDB.disCNS.slidermark + BDFDB.disCN.slidermarkabove}" style="left:${n[0]};"><div class="${BDFDB.disCN.slidermarkvalue}">${n[1]}</div><div class="${BDFDB.disCN.slidermarkdash}"></div></div>`).join("")}</div><div class="${BDFDB.disCN.sliderbar}"><div class="${BDFDB.disCN.sliderbarfill}"></div></div><div class="${BDFDB.disCN.slidertrack}"><div class="${BDFDB.disCNS.slidergrabber + BDFDB.disCN._timedlightdarkmodetimergrabber}" timer="timer1" style="left: ${_this.settings.values.timer1}%;"></div><div class="${BDFDB.disCNS.slidergrabber + BDFDB.disCN._timedlightdarkmodetimergrabber}" timer="timer2" style="left: ${_this.settings.values.timer2}%;"></div><div class="${BDFDB.disCNS.slidergrabber + BDFDB.disCN._timedlightdarkmodedategrabber}" timer="current" style="left: ${_this.getPercent(new Date())}%; cursor: help !important; transform: scaleY(50%);"></div></div></div>`), node => {
+									if (!Node.prototype.isPrototypeOf(node)) return;
+									slider = node;
+									_this.updateSlider(slider);
+									BDFDB.ListenerUtils.addToChildren(slider, "mousedown", BDFDB.dotCN._timedlightdarkmodetimergrabber, event => _this.dragSlider(event.currentTarget));
+									BDFDB.ListenerUtils.addToChildren(slider, "mouseenter", BDFDB.dotCN._timedlightdarkmodedategrabber, event => _this.showCurrentTime(event.currentTarget));
+								})
+							]
+						}),
+						BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormDivider, {
+							className: BDFDB.disCNS.margintop20 + BDFDB.disCN.marginbottom8
+						})
+					]
+				});
+			}
+		};
 		
 		return class TimedLightDarkMode extends Plugin {
 			onLoad () {
+				_this = this;
+				
 				this.defaults = {
 					general: {
 						running:	{value: true}
@@ -76,8 +119,8 @@ module.exports = (_ => {
 				};
 				
 				this.modulePatches = {
-					after: [
-						"UserSettingsAppearance"
+					before: [
+						"SettingsPanel"
 					]
 				};
 			}
@@ -104,42 +147,14 @@ module.exports = (_ => {
 				BDFDB.DOMUtils.remove(BDFDB.dotCN._timedlightdarkmodetimersettings);
 			}
 
-			processUserSettingsAppearance (e) {
-				let [children, index] = BDFDB.ReactUtils.findParent(e.returnvalue, {filter: n => n && n.props && n.props.setting == "APPEARANCE_THEME"});
-				if (index == -1) return;
-				let slider;
-				children[index].props.children.push([
-					BDFDB.ReactUtils.createElement("div", {
-						className: BDFDB.disCNS._timedlightdarkmodetimersettings + BDFDB.disCN.margintop20,
-						children: [
-							BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.SettingsSaveItem, {
-								type: "Switch",
-								plugin: this,
-								keys: ["general", "running"],
-								value: this.settings.general.running,
-								label: `${BDFDB.LanguageUtils.LanguageStrings.THEME} Timer`,
-								tag: BDFDB.LibraryComponents.FormTitle.Tags.H5,
-								childProps: {
-									checkedColor: BDFDB.DiscordConstants.Colors.GREEN_360
-								},
-								onChange: (value, instance) => {
-									this.startInterval();
-									if (slider) BDFDB.DOMUtils.toggleClass(slider, BDFDB.disCN.sliderdisabled, !value);
-								}
-							}),
-							BDFDB.ReactUtils.elementToReact(BDFDB.DOMUtils.create(`<div class="${BDFDB.disCNS.slider + BDFDB.disCNS.sliderhasmarks + BDFDB.disCN.margintop20}${!this.settings.general.running ? (" " + BDFDB.disCN.sliderdisabled): ""}"><div class="${BDFDB.disCN.slidertrack}">${[["0%", "00:00"], ["12.5%", "03:00"], ["25%", "06:00"], ["37.5%", "09:00"], ["50%", "12:00"], ["62.5%", "15:00"], ["75%", "18:00"], ["87.5%", "21:00"], ["100%", "24:00"]].map(n => `<div class="${BDFDB.disCNS.slidermark + BDFDB.disCN.slidermarkabove}" style="left:${n[0]};"><div class="${BDFDB.disCN.slidermarkvalue}">${n[1]}</div><div class="${BDFDB.disCN.slidermarkdash}"></div></div>`).join("")}</div><div class="${BDFDB.disCN.sliderbar}"><div class="${BDFDB.disCN.sliderbarfill}"></div></div><div class="${BDFDB.disCN.slidertrack}"><div class="${BDFDB.disCNS.slidergrabber + BDFDB.disCN._timedlightdarkmodetimergrabber}" timer="timer1" style="left: ${this.settings.values.timer1}%;"></div><div class="${BDFDB.disCNS.slidergrabber + BDFDB.disCN._timedlightdarkmodetimergrabber}" timer="timer2" style="left: ${this.settings.values.timer2}%;"></div><div class="${BDFDB.disCNS.slidergrabber + BDFDB.disCN._timedlightdarkmodedategrabber}" timer="current" style="left: ${this.getPercent(new Date())}%; cursor: help !important; transform: scaleY(50%);"></div></div></div>`), node => {
-								if (!Node.prototype.isPrototypeOf(node)) return;
-								slider = node;
-								this.updateSlider(slider);
-								BDFDB.ListenerUtils.addToChildren(slider, "mousedown", BDFDB.dotCN._timedlightdarkmodetimergrabber, event => this.dragSlider(event.currentTarget));
-								BDFDB.ListenerUtils.addToChildren(slider, "mouseenter", BDFDB.dotCN._timedlightdarkmodedategrabber, event => this.showCurrentTime(event.currentTarget));
-							})
-						]
-					}),
-					BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.FormDivider, {
-						className: BDFDB.disCNS.margintop20 + BDFDB.disCN.marginbottom8
-					})
-				]);
+			processSettingsPanel (e) {
+				if (e.instance.props.panelKey != "appearance_panel" || e.instance.props.layout[0].layout[0].layout.some(n => n.key == "timed_light_dark_slider")) return;
+				e.instance.props.layout[0].layout[0].layout.splice(1, 0, {
+					Component: TimerSliderComponent,
+					key: "timed_light_dark_slider",
+					parent: e.instance.props.layout[0].layout[0],
+					type: 19
+				});
 			}
 
 			startInterval () {
