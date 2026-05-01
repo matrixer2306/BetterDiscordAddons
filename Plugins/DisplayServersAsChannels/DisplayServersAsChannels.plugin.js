@@ -320,7 +320,7 @@ module.exports = (_ => {
 				e.instance.props.shouldShow = false;
 			}
 			
-			removeTooltip (parent, guild, log) {
+			removeTooltip (parent) {
 				let [children, index] = BDFDB.ReactUtils.findParent(parent, {name: ["ListItemTooltip", "GuildTooltip", "BDFDB_TooltipContainer"]});
 				if (log) console.log(parent);
 				if (index == -1) {
